@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    --page-bg: #f1f5f9;
+    --page-text: #0f172a;
+    --grid-accent: rgba(2, 132, 199, 0.12);
+    --grid-line: rgba(148, 163, 184, 0.35);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(15, 23, 42, 0.12);
+    --header-bg: rgba(241, 245, 249, 0.9);
+    --header-border: rgba(15, 23, 42, 0.15);
+  }
+
+  html.dark {
+    --page-bg: #0a1628;
+    --page-text: #ffffff;
+    --grid-accent: rgba(0, 212, 255, 0.17);
+    --grid-line: rgba(30, 45, 64, 0.55);
+    --card-bg: rgba(30, 45, 64, 0.82);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --header-bg: rgba(10, 22, 40, 0.9);
+    --header-border: rgba(255, 255, 255, 0.1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--page-text);
+    font-family: 'Manrope', system-ui, -apple-system, Segoe UI, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-heading {
+    font-family: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #00d4ff;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-color: var(--page-bg);
+    background-image:
+      radial-gradient(circle at 15% 15%, var(--grid-accent), transparent 28%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+    background-position: center;
+  }
+
+  .bg-soft-slate {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.18), 0 14px 40px rgba(0, 212, 255, 0.22);
+  }
+}
+
+.site-header {
+  background: var(--header-bg) !important;
+  border-color: var(--header-border) !important;
+}
+
+.theme-light .text-white {
+  color: #0f172a !important;
+}
+
+.theme-light .text-slate-100 {
+  color: #1e293b !important;
+}
+
+.theme-light .text-slate-200 {
+  color: #334155 !important;
+}
+
+.theme-light .text-slate-300 {
+  color: #475569 !important;
+}
+
+.theme-light .text-cyan-100,
+.theme-light .text-cyan-200,
+.theme-light .text-cyan-300 {
+  color: #0369a1 !important;
+}
+
+.theme-light .border-white\/10,
+.theme-light .border-white\/15 {
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+.theme-light .bg-\[\#0A1628\],
+.theme-light .bg-\[\#0A1628\]\/70,
+.theme-light .bg-\[\#0A1628\]\/85,
+.theme-light .bg-\[\#0A1628\]\/90 {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+}
+
+.theme-light .bg-\[\#102038\] {
+  background-color: #e2e8f0 !important;
+}
+
+.theme-light input,
+.theme-light textarea {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.2) !important;
+}
