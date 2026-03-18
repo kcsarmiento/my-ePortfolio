@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Code2, Menu, Moon, Sun, X } from 'lucide-react'
+import Snowfall from 'react-snowfall'
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -39,7 +40,9 @@ function SiteLayout() {
   }, [location.pathname])
 
   return (
-    <div className={`min-h-screen bg-grid text-white antialiased ${darkMode ? 'theme-dark' : 'theme-light'}`}>
+    <div className={`min-h-screen bg-grid text-white antialiased ${darkMode ? 'theme-dark' : 'theme-light'} flex flex-col`}>
+      <Snowfall className="pointer-events-none fixed inset-0 z-30" snowflakeCount={120} />
+
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-cyan-400 focus:px-4 focus:py-2 focus:text-slate-900"
@@ -127,11 +130,11 @@ function SiteLayout() {
         )}
       </header>
 
-      <main id="main-content" tabIndex={-1}>
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <Outlet />
       </main>
 
-      <footer className="border-t border-white/10 px-4 py-6 text-center text-xs text-slate-300 sm:px-6">
+      <footer className="mt-auto border-t border-white/10 px-4 py-6 text-center text-xs text-slate-300 sm:px-6">
         © {year} Kc Sarmiento | Jose Rizal University | ITC-C506 ePortfolio |
         kc.sarmiento@my.jru.edu | GitHub: github.com/kcsarmiento
       </footer>

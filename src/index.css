@@ -32,6 +32,37 @@
     scroll-behavior: smooth;
   }
 
+  html.reader-mode {
+    font-size: 18px;
+  }
+
+  html.reader-mode * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.reader-mode p,
+  html.reader-mode li,
+  html.reader-mode a,
+  html.reader-mode button,
+  html.reader-mode input,
+  html.reader-mode textarea,
+  html.reader-mode label {
+    line-height: 1.75 !important;
+    letter-spacing: 0.01em;
+  }
+
+  html.reader-mode h1,
+  html.reader-mode h2,
+  html.reader-mode h3,
+  html.reader-mode h4,
+  html.reader-mode h5,
+  html.reader-mode h6 {
+    line-height: 1.35 !important;
+  }
+
   body {
     margin: 0;
     background: var(--page-bg);

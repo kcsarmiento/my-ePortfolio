@@ -1,8 +1,18 @@
 export const futureProofing = {
   "midterm": {
     "heading": "Midterm",
-    "status": "Coming Soon",
-    "summary": "Midterm outputs will be published here with the same rubric-ready structure once activities are completed."
+    "status": "Exercise 1 Published",
+    "summary": "This section now includes our first Midterm exercise artifact and reflection document. Click the links below to open the notebook and write-up directly.",
+    "links": [
+      {
+        "label": "Open Notebook (nbviewer)",
+        "url": "https://nbviewer.org/github/kcsarmiento/titanic-logistic-regression/blob/main/SARMIENTO_Exercise_PTM1_notebook.ipynb"
+      },
+      {
+        "label": "Open Midterm Exercise 1 Report",
+        "url": "https://docs.google.com/document/d/1_7b7FX_RG6fq_nkot8cQ4Fr2J-Dm9hpicHVTeCOLqlc/preview"
+      }
+    ]
   },
   "finals": {
     "heading": "Finals",

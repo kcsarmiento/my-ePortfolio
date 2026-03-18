@@ -62,9 +62,9 @@ function ContactPage() {
       variants={sectionMotion}
       initial="hidden"
       animate="show"
-      className="mx-auto max-w-7xl px-4 py-20 sm:px-6"
+      className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-7xl items-center px-4 py-20 sm:px-6"
     >
-      <div className="grid gap-8 lg:grid-cols-[1fr,1.2fr]">
+      <div className="w-full grid gap-8 lg:grid-cols-[1fr,1.2fr]">
         <aside className="space-y-4 rounded-2xl border border-white/10 bg-soft-slate p-6">
           <p className="font-heading text-xs uppercase tracking-[0.3em] text-cyan-300">
             Contact
