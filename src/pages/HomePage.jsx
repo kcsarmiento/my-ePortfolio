@@ -106,7 +106,7 @@ function HomePage() {
           <div className="flex flex-wrap gap-3">
             <button
               type="button"
-              onClick={() => navigate('/outputs')}
+              onClick={() => navigate('/outputs/prelim')}
               className="inline-flex items-center gap-2 rounded-md bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
             >
               View My Work <ArrowRight className="h-4 w-4" />
@@ -200,7 +200,7 @@ function HomePage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/outputs')}
+              onClick={() => navigate('/outputs/prelim')}
               className="inline-flex items-center gap-2 rounded-md border border-cyan-300/40 px-5 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/10"
             >
               Open Full Outputs <ArrowRight className="h-4 w-4" />

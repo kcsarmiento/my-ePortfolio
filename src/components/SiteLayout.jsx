@@ -19,7 +19,9 @@ function SiteLayout() {
     if (savedTheme) {
       return savedTheme === 'dark'
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    // Default to dark mode for first-time visitors.
+    return true
   })
 
   const year = useMemo(() => new Date().getFullYear(), [])

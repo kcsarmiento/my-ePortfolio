@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import { portfolioData } from '../data/portfolioData'
@@ -30,8 +30,7 @@ function OutputsPage() {
   const initialTab = periodTabs.includes(requestedPeriod)
     ? requestedPeriod
     : (getTabFromOutputId(targetOutputId) ?? 'prelim')
-  
-  const [activeOutputTab] = useState(initialTab)
+  const activeOutputTab = initialTab
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
@@ -129,7 +128,6 @@ function OutputsPage() {
 
   return (
     <MotionSection
-      key={`outputs-${period || 'prelim'}`}
       id="outputs"
       variants={staggerContainer}
       initial="hidden"
