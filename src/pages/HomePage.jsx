@@ -56,6 +56,15 @@ function HomePage() {
   const navigate = useNavigate()
   const prelimOutputs = portfolioData.prelimOutputs ?? []
   const latestMidtermOutputs = portfolioData.midtermOutputs ?? []
+  const finalsOutputs = portfolioData.finalsOutputs ?? []
+
+  const resolveOutputTab = (outputId) => {
+    if (latestMidtermOutputs.some((output) => output.id === outputId)) return 'midterm'
+    if (prelimOutputs.some((output) => output.id === outputId)) return 'prelim'
+    if (finalsOutputs.some((output) => output.id === outputId)) return 'finals'
+    return 'prelim'
+  }
+
   const latestOutput = latestMidtermOutputs[0] ?? prelimOutputs[0]
   const featuredOutputs = [
     ...latestMidtermOutputs.filter((output) => output.id !== latestOutput?.id),
@@ -182,7 +191,9 @@ function HomePage() {
           <div className="mt-5 flex flex-wrap gap-3">
             <button
               type="button"
-              onClick={() => navigate('/outputs', { state: { defaultTab: 'midterm' } })}
+              onClick={() =>
+                navigate(`/outputs/${resolveOutputTab(latestOutput.id)}/${latestOutput.id}`)
+              }
               className="inline-flex items-center gap-2 rounded-md bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
             >
               Open Latest Output <ArrowRight className="h-4 w-4" />
@@ -288,7 +299,11 @@ function HomePage() {
               </div>
               <button
                 type="button"
-                onClick={() => navigate('/outputs')}
+                onClick={() =>
+                  navigate(
+                    `/outputs/${resolveOutputTab(output.id)}/${output.id}`
+                  )
+                }
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 hover:text-cyan-100"
               >
                 Open full output card <ArrowRight className="h-4 w-4" />

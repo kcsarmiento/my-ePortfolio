@@ -10,11 +10,12 @@ export const technicalSkills = {
     "PHP",
     "Laravel",
     "React",
-    "Tailwind CSS",
+    "Express JS",
     "REST APIs"
   ],
   "tools": [
     "Git",
+    "Visual Studio Code",
     "GitHub",
     "Jupyter Notebook",
     "Google Colab"

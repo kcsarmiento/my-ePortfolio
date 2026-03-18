@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import { portfolioData } from '../data/portfolioData'
 
 const MotionSection = motion.section
@@ -10,17 +10,65 @@ const MotionArticle = motion.article
 const periodTabs = ['prelim', 'midterm', 'finals']
 
 function OutputsPage() {
+  const { period, exerciseId } = useParams()
   const location = useLocation()
-  const [activeOutputTab, setActiveOutputTab] = useState('prelim')
+  const navigate = useNavigate()
+  const lastScrolledTargetRef = useRef('')
+  
+  // Support backward compatibility with query params
+  const query = useMemo(() => new URLSearchParams(location.search), [location.search])
+  const targetOutputId = exerciseId ?? query.get('output')
+  const requestedPeriod = period ?? query.get('tab')
+
+  const getTabFromOutputId = (outputId) => {
+    if (portfolioData.midtermOutputs?.some((output) => output.id === outputId)) return 'midterm'
+    if (portfolioData.prelimOutputs?.some((output) => output.id === outputId)) return 'prelim'
+    if (portfolioData.finalsOutputs?.some((output) => output.id === outputId)) return 'finals'
+    return null
+  }
+
+  const initialTab = periodTabs.includes(requestedPeriod)
+    ? requestedPeriod
+    : (getTabFromOutputId(targetOutputId) ?? 'prelim')
+  
+  const [activeOutputTab] = useState(initialTab)
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
-    const requestedTab = location.state?.defaultTab
-    if (requestedTab && periodTabs.includes(requestedTab)) {
-      setActiveOutputTab(requestedTab)
-      window.history.replaceState({}, document.title)
+    if (!targetOutputId) return
+
+    const targetKey = `${location.key}:${activeOutputTab}:${targetOutputId}`
+    if (lastScrolledTargetRef.current === targetKey) return
+
+    let attempts = 0
+    let timeoutId
+
+    const tryScroll = () => {
+      const targetCard = document.getElementById(`output-card-${targetOutputId}`)
+
+      if (targetCard) {
+        targetCard.scrollIntoView({
+          behavior: shouldReduceMotion ? 'auto' : 'smooth',
+          block: 'start',
+        })
+        lastScrolledTargetRef.current = targetKey
+        return
+      }
+
+      if (attempts < 12) {
+        attempts += 1
+        timeoutId = window.setTimeout(tryScroll, 60)
+      }
     }
-  }, [location.state])
+
+    // Always start fresh when targetOutputId changes
+    lastScrolledTargetRef.current = ''
+    tryScroll()
+
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId)
+    }
+  }, [targetOutputId, activeOutputTab, location.key, shouldReduceMotion])
 
   const sectionMotion = useMemo(
     () =>
@@ -59,10 +107,14 @@ function OutputsPage() {
     [shouldReduceMotion]
   )
 
-  const activeOutputs = useMemo(
-    () => portfolioData[`${activeOutputTab}Outputs`] ?? [],
-    [activeOutputTab]
-  )
+  const activeOutputs = useMemo(() => {
+    const allOutputs = portfolioData[`${activeOutputTab}Outputs`] ?? []
+    // If viewing single exercise, filter to just that one
+    if (targetOutputId) {
+      return allOutputs.filter((output) => output.id === targetOutputId)
+    }
+    return allOutputs
+  }, [activeOutputTab, targetOutputId])
 
   const activePeriod = useMemo(
     () => portfolioData.futureProofing[activeOutputTab],
@@ -77,6 +129,7 @@ function OutputsPage() {
 
   return (
     <MotionSection
+      key={`outputs-${period || 'prelim'}`}
       id="outputs"
       variants={staggerContainer}
       initial="hidden"
@@ -95,18 +148,18 @@ function OutputsPage() {
       </MotionDiv>
 
       <MotionDiv variants={sectionMotion} className="flex flex-wrap gap-4">
-        {periodTabs.map((period) => (
+        {periodTabs.map((periodTab) => (
           <button
-            key={period}
+            key={periodTab}
             type="button"
-            onClick={() => setActiveOutputTab(period)}
+            onClick={() => navigate(`/outputs/${periodTab}`)}
             className={`rounded-md px-4 py-2.5 text-sm font-semibold uppercase tracking-wide transition ${
-              activeOutputTab === period
+              activeOutputTab === periodTab
                 ? 'bg-cyan-400 text-slate-900'
                 : 'border border-white/15 text-slate-200 hover:bg-white/10'
             }`}
           >
-            {period}
+            {periodTab}
           </button>
         ))}
       </MotionDiv>
@@ -122,6 +175,7 @@ function OutputsPage() {
             <MotionArticle
               variants={sectionMotion}
               key={item.id}
+              id={`output-card-${item.id}`}
               className="overflow-hidden rounded-2xl border border-white/10 bg-soft-slate"
             >
               <div className="border-b border-white/10 px-5 py-4 sm:px-6">
